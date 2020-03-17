@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000" />
+
+        <ImageView
+            android:id="@+id/image_no"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:onClick="@{onClickListener}"
+            android:padding="10dp"
+            android:src="@mipmap/picture_no"
+            />
+
+
+        <ImageView
+            android:id="@+id/image_yes"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:onClick="@{onClickListener}"
+            android:padding="10dp"
+            android:src="@mipmap/picture_yes"
+            />
+
+    </RelativeLayout>
+</layout>

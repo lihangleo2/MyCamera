@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/buttonPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{onClickListener}"
+            android:text="调用系统相机-获取缩略图"
+            />
+
+        <ImageView
+            android:layout_below="@+id/buttonPanel"
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"/>
+
+        <Button
+            android:layout_below="@+id/image"
+            android:id="@+id/buttonPane2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{onClickListener}"
+            android:text="调用系统相机-获取图片path"
+            />
+
+        <ImageView
+            android:id="@+id/imageSrc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+</layout>

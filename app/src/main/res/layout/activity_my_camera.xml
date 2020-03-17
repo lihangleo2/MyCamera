@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.lihang.mycamera.ui.mycamera.customview.CameraView
+            android:id="@+id/cameraView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <ImageView
+            android:id="@+id/image_take"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:onClick="@{onClickListener}"
+            android:src="@mipmap/take_picture" />
+
+
+        <ImageView
+            android:id="@+id/image_switch"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:onClick="@{onClickListener}"
+            android:padding="10dp"
+            android:src="@mipmap/carm_switch" />
+
+        <ImageView
+            android:id="@+id/image_flash"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/image_switch"
+            android:onClick="@{onClickListener}"
+            android:padding="10dp"
+            android:src="@mipmap/flash_a" />
+
+
+    </RelativeLayout>
+</layout>
