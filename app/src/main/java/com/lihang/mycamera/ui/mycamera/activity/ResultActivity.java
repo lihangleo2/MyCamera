@@ -4,11 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.View;
 
 import com.lihang.mycamera.R;
 import com.lihang.mycamera.base.BaseActivity;
 import com.lihang.mycamera.databinding.ActivityResultBinding;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * Created by leo
@@ -45,6 +50,18 @@ public class ResultActivity extends BaseActivity<ActivityResultBinding> {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image_yes:
+                //将图片保存到系统相册里
+                File file = new File(path);
+                try {
+                    MediaStore.Images.Media.insertImage(getContentResolver(),
+                            file.getAbsolutePath(), file.getName(), null);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Uri localUri = Uri.fromFile(file);
+                Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
+                sendBroadcast(localIntent);
+
                 finish();
                 overridePendingTransition(R.anim.scale_activity_go, R.anim.scale_activity_come);
                 break;
