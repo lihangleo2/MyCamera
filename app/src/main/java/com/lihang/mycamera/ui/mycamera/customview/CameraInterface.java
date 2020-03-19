@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
+import android.media.CamcorderProfile;
+import android.media.MediaRecorder;
 import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -171,7 +173,7 @@ public class CameraInterface {
     //这是获取预览图的接口。什么意思呢？
     //比如上面的takePicture,即使不做任何处理，点击拍照也会停留顿一下。
     //说个小需求，如果加上相机人脸识别，当相机里出现人脸的画，需要取几张人脸的图，用拍照就不好实现了。得用下面的实现。
-    public void takeOneShotPreview(){
+    public void takeOneShotPreview() {
         mCamera.setOneShotPreviewCallback(new Camera.PreviewCallback() {
             @Override
             public void onPreviewFrame(byte[] data, Camera camera) {
@@ -179,10 +181,6 @@ public class CameraInterface {
             }
         });
     }
-
-
-
-
 
 
     private String savePicture(byte[] data) {
@@ -319,6 +317,76 @@ public class CameraInterface {
             return false;
         } else {
             return true;
+        }
+    }
+
+
+    /**
+     * 这块是关于视频录制的
+     */
+    MediaRecorder mMediaRecorder;
+    String videoPath;
+
+    public boolean prepareVideoRecorder(SurfaceHolder surfaceHolder) {
+         videoPath = context.getFilesDir().getAbsolutePath().toString() + "/" + TimeUtils.getDateToStringLeo(System.currentTimeMillis() + "") + "_atmancarm.mp4";
+
+        mMediaRecorder = new MediaRecorder();
+
+        // Step 1: Unlock and set camera to MediaRecorder
+        mCamera.unlock();
+        mMediaRecorder.setCamera(mCamera);
+
+        // Step 2: Set sources
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+        mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+
+        // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
+        mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+
+        // Step 4: Set output file
+        mMediaRecorder.setOutputFile(videoPath);
+
+        // Step 5: Set the preview output
+        mMediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
+        if (cameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
+            mMediaRecorder.setOrientationHint(90);
+        } else if (cameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            mMediaRecorder.setOrientationHint(270);
+        }
+
+
+
+
+        // Step 6: Prepare configured MediaRecorder
+        try {
+            mMediaRecorder.prepare();
+        } catch (IllegalStateException e) {
+            releaseMediaRecorder();
+            return false;
+        } catch (IOException e) {
+            releaseMediaRecorder();
+            return false;
+        }
+        return true;
+    }
+
+
+    public void startRecord() {
+        mMediaRecorder.start();
+    }
+
+    public String stopRecod() {
+        mMediaRecorder.stop();
+        return videoPath;
+    }
+
+
+    public void releaseMediaRecorder() {
+        if (mMediaRecorder != null) {
+            mMediaRecorder.reset();   // clear recorder configuration
+            mMediaRecorder.release(); // release the recorder object
+            mMediaRecorder = null;
+            mCamera.lock();           // lock camera for later use
         }
     }
 

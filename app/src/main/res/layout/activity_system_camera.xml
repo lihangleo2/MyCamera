@@ -34,6 +34,15 @@
             android:text="调用系统相机-获取图片path"
             />
 
+        <Button
+            android:layout_below="@+id/buttonPane2"
+            android:id="@+id/buttonPane3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{onClickListener}"
+            android:text="调用系统相机-录制视频"
+            />
+
         <ImageView
             android:id="@+id/imageSrc"
             android:layout_width="match_parent"

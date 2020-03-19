@@ -98,4 +98,29 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
+    //是否准备好了拍摄
+    public boolean prepareVideo() {
+        return CameraInterface.getInstance(getContext()).prepareVideoRecorder(mSurfaceHolder);
+    }
+
+    public void startRecord() {
+        CameraInterface.getInstance(getContext()).startRecord();
+    }
+
+    public String stopRecod() {
+        String videoPath = CameraInterface.getInstance(getContext()).stopRecod();
+        CameraInterface.getInstance(getContext()).releaseMediaRecorder();
+        return videoPath;
+    }
+
+    public String stopRecodTest() {
+        String videoPath = CameraInterface.getInstance(getContext()).stopRecod();
+        return videoPath;
+    }
+
+    public void releaseMediaRecorder() {
+        CameraInterface.getInstance(getContext()).releaseMediaRecorder();
+    }
+
+
 }

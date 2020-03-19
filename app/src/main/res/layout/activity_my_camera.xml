@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -20,15 +21,17 @@
             android:layout_height="wrap_content" />
 
 
-        <ImageView
-            android:id="@+id/image_take"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
+        <com.lihang.mycamera.ui.mycamera.customview.VideoControlView
+            android:id="@+id/controlView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:excircleRadius="30dp"
+            app:innerCircleRadius="20dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
-            android:onClick="@{onClickListener}"
-            android:src="@mipmap/take_picture" />
+            />
+
 
 
         <ImageView

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.lihang.mycamera.R;
+import com.lihang.mycamera.ui.mycamera.activity.VideoPlayActivity;
 import com.lihang.mycamera.ui.systemcamera.SystemCameraActivity;
 import com.lihang.mycamera.ui.mycamera.activity.MyCameraActivity;
 import com.lihang.mycamera.base.BaseActivity;
@@ -41,7 +42,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         switch (v.getId()) {
             case R.id.buttonPanel:
                 goWhat(0);
-
+//                VideoPlayActivity.startActivity(this);
                 break;
 
             case R.id.buttonPane2:
@@ -52,7 +53,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
 
     public void goWhat(final int type) {
-        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO)
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
@@ -60,6 +61,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                             //这个判断是为了解决，oppo手机保持禁止后，也会走这个方法，android太杂了
                             if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                                     && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                                    && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
                             ) {
                                 if (type == 0) {
                                     ActivityUtils.startActivity(MainActivity.this, SystemCameraActivity.class);

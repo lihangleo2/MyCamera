@@ -1,6 +1,9 @@
 package com.lihang.mycamera.ui.systemcamera;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,10 +14,13 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.lihang.mycamera.R;
 import com.lihang.mycamera.base.BaseActivity;
 import com.lihang.mycamera.databinding.ActivitySystemCameraBinding;
+import com.lihang.mycamera.ui.MainActivity;
+import com.lihang.mycamera.ui.mycamera.activity.VideoPlayActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,6 +39,7 @@ import androidx.core.content.FileProvider;
 public class SystemCameraActivity extends BaseActivity<ActivitySystemCameraBinding> {
     private static int CAMERA_RESULT = 1;
     private static int CAMERA_PATH = 2;
+    private static int CAMERA_VIDEO_PATH = 3;
     File newFile;
 
     @Override
@@ -43,7 +50,6 @@ public class SystemCameraActivity extends BaseActivity<ActivitySystemCameraBindi
     @Override
     protected void processLogic() {
         newFile = new File(getExternalCacheDir(), "output_image.jpg");
-
     }
 
     @Override
@@ -73,6 +79,11 @@ public class SystemCameraActivity extends BaseActivity<ActivitySystemCameraBindi
                 intent_2.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent_2, CAMERA_PATH);
                 break;
+
+            case R.id.buttonPane3:
+                Intent intentVideo = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                startActivityForResult(intentVideo, CAMERA_VIDEO_PATH);
+                break;
         }
     }
 
@@ -87,6 +98,9 @@ public class SystemCameraActivity extends BaseActivity<ActivitySystemCameraBindi
             } else if (requestCode == CAMERA_PATH) {
                 Bitmap bitmap = BitmapFactory.decodeFile(newFile.getPath());
                 binding.imageSrc.setImageBitmap(bitmap);
+            } else if (requestCode == CAMERA_VIDEO_PATH) {
+                String path = data.getData().toString();
+                VideoPlayActivity.startActivity(SystemCameraActivity.this, path);
             }
         }
     }

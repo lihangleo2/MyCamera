@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
 
     <application
@@ -50,6 +51,11 @@
 
         <activity
             android:name=".ui.mycamera.activity.ResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleFullscreen" />
+
+        <activity
+            android:name=".ui.mycamera.activity.VideoPlayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleFullscreen" />
 
